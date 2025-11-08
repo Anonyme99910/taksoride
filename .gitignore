@@ -1,0 +1,42 @@
+# Dependencies
+node_modules/
+vendor/
+
+# Environment files
+.env
+.env.local
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Database
+*.sql.gz
+*.sql.zip
+
+# Uploads
+uploads/*
+!uploads/.gitkeep
+
+# Cache
+cache/
+*.cache
+
+# Sensitive data
+config/database.php
+server/drop-files/config/db_config.php

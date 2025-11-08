@@ -1,0 +1,105 @@
+═══════════════════════════════════════════════════════════════
+  TaksoRide - Quick Setup Guide
+═══════════════════════════════════════════════════════════════
+
+🔑 HOW TO ACTIVATE SERVICES
+═══════════════════════════════════════════════════════════════
+
+1. LOGIN TO ADMIN
+   URL: http://localhost/hamma/server/public/login.php
+   Email: admin@taksoride.com
+   Password: admin123
+
+2. GO TO SERVICE ACTIVATION
+   Click: Sidebar → Service Activation (🔑 icon)
+   Or Direct: http://localhost/hamma/server/public/admin/service-activation.php
+
+3. CONFIGURE SERVICES (SIMPLE!)
+   For each service you want to use:
+   
+   a) Find the service (e.g., "Google Maps API")
+   b) Toggle it ON (green switch)
+   c) Add your API key in the JSON box:
+      
+      Example for Google Maps:
+      {
+        "api_key": "YOUR_API_KEY_HERE",
+        "enabled": true
+      }
+   
+   d) Click "Test Connection" (blue button)
+   e) If green ✓ appears, click "Save Configuration"
+
+4. DONE! Service is activated!
+
+═══════════════════════════════════════════════════════════════
+📋 SERVICES YOU CAN ACTIVATE
+═══════════════════════════════════════════════════════════════
+
+ESSENTIAL (Pick at least 1):
+  🗺️  Google Maps API - For ride booking and maps
+  🔥 Firebase - For push notifications  
+  📡 PubNub - For real-time tracking
+
+OPTIONAL:
+  📧 SMTP Email - Email notifications
+  💳 Stripe - Credit card payments
+  💰 PayPal - PayPal payments
+  🗄️  Redis - Performance caching
+
+═══════════════════════════════════════════════════════════════
+🎯 MINIMUM SETUP (FASTEST)
+═══════════════════════════════════════════════════════════════
+
+Just Google Maps:
+1. Get API key from: https://console.cloud.google.com/
+2. Go to Service Activation
+3. Find "Google Maps API"
+4. Add key:
+   {
+     "api_key": "AIzaSyXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+     "enabled": true
+   }
+5. Test → Save
+6. DONE! Ride booking works!
+
+═══════════════════════════════════════════════════════════════
+✅ WHAT'S FIXED
+═══════════════════════════════════════════════════════════════
+
+✓ Sidebar now shows properly
+✓ Service Activation menu visible
+✓ Test button works for each service
+✓ Services are optional (not required)
+✓ Can enable just 1 service
+✓ Simple JSON input for API keys
+✓ No coding needed!
+
+═══════════════════════════════════════════════════════════════
+🧪 TEST BUTTON
+═══════════════════════════════════════════════════════════════
+
+The blue "Test Connection" button:
+  • Tests if your API key works
+  • Shows instant result (1-3 seconds)
+  • ✓ Green = Success! Key works
+  • ✗ Red = Error, check your key
+  • No page reload needed
+
+═══════════════════════════════════════════════════════════════
+💡 TIPS
+═══════════════════════════════════════════════════════════════
+
+1. You DON'T need all services
+2. Start with just Google Maps
+3. Always test before saving
+4. Toggle services ON/OFF anytime
+5. Keep your API keys secure
+
+═══════════════════════════════════════════════════════════════
+📞 NEED HELP?
+═══════════════════════════════════════════════════════════════
+
+See detailed guide: SERVICE_ACTIVATION_GUIDE.md
+
+═══════════════════════════════════════════════════════════════
