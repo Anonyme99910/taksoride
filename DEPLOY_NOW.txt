@@ -1,0 +1,213 @@
+═══════════════════════════════════════════════════════════════
+🚀 DEPLOY TAKSORIDE TO SERVER - STEP BY STEP
+═══════════════════════════════════════════════════════════════
+
+SERVER INFO:
+- IP: 45.93.139.14
+- Domain: test.taksoride.com
+- Database: taksoride
+- DB Password: Tabarka2016@@GG00
+
+═══════════════════════════════════════════════════════════════
+STEP 1: CONNECT TO SERVER
+═══════════════════════════════════════════════════════════════
+
+Open your terminal/SSH client and run:
+
+    ssh root@45.93.139.14
+
+Enter your root password when prompted.
+
+═══════════════════════════════════════════════════════════════
+STEP 2: DOWNLOAD DEPLOYMENT SCRIPT
+═══════════════════════════════════════════════════════════════
+
+Once connected, run these commands:
+
+    cd /root
+    wget https://raw.githubusercontent.com/Anonyme99910/taksoride/main/deploy.sh
+    chmod +x deploy.sh
+
+═══════════════════════════════════════════════════════════════
+STEP 3: RUN DEPLOYMENT (FIRST TIME)
+═══════════════════════════════════════════════════════════════
+
+For first time deployment with database setup:
+
+    ./deploy.sh --init
+
+This will:
+✓ Clone the repository
+✓ Set up file permissions
+✓ Configure database connection
+✓ Import all database tables
+✓ Create admin user
+✓ Configure Apache
+✓ Install SSL certificate
+✓ Start the application
+
+═══════════════════════════════════════════════════════════════
+STEP 4: VERIFY DEPLOYMENT
+═══════════════════════════════════════════════════════════════
+
+After deployment completes, visit:
+
+    https://test.taksoride.com/server/public/admin/
+
+Login with:
+    Username: admin
+    Password: admin123
+
+⚠️ CHANGE THIS PASSWORD IMMEDIATELY!
+
+═══════════════════════════════════════════════════════════════
+STEP 5: CONFIGURE API KEYS
+═══════════════════════════════════════════════════════════════
+
+In the admin panel, go to Settings and configure:
+
+1. Google Maps API Key
+2. Firebase Server Key
+3. PubNub Publish/Subscribe Keys
+4. Payment Gateway Keys (if needed)
+
+═══════════════════════════════════════════════════════════════
+STEP 6: TEST FEATURES
+═══════════════════════════════════════════════════════════════
+
+Test these features:
+□ Login to admin panel
+□ View dashboard statistics
+□ Create subscription plan
+□ Create cashback rule
+□ Edit subscription plan
+□ Edit cashback rule
+□ Check database tables
+
+═══════════════════════════════════════════════════════════════
+ALTERNATIVE: MANUAL DEPLOYMENT
+═══════════════════════════════════════════════════════════════
+
+If you prefer manual deployment:
+
+1. Connect to server:
+   ssh root@45.93.139.14
+
+2. Navigate to web root:
+   cd /var/www/html
+
+3. Clone repository:
+   git clone https://github.com/Anonyme99910/taksoride.git test.taksoride.com
+   cd test.taksoride.com
+
+4. Set permissions:
+   chown -R www-data:www-data .
+   find . -type d -exec chmod 755 {} \;
+   find . -type f -exec chmod 644 {} \;
+   chmod -R 777 server/public/img/uploads
+
+5. Configure database:
+   nano server/drop-files/config/db_config.php
+   
+   Add:
+   <?php
+   define('DB_HOST', 'localhost');
+   define('DB_USER', 'taksoride');
+   define('DB_PASS', 'Tabarka2016@@GG00');
+   define('DB_NAME', 'taksoride');
+   define('DB_TBL_PREFIX', 'cab_');
+   ?>
+
+6. Import database:
+   cd server/drop-files/install
+   mysql -u taksoride -p'Tabarka2016@@GG00' taksoride < database_setup.sql
+   mysql -u taksoride -p'Tabarka2016@@GG00' taksoride < create_settings_table.sql
+   mysql -u taksoride -p'Tabarka2016@@GG00' taksoride < subscription_system.sql
+   mysql -u taksoride -p'Tabarka2016@@GG00' taksoride < fix_commission_conflict.sql
+
+7. Configure Apache:
+   nano /etc/apache2/sites-available/test.taksoride.com.conf
+   
+   Add:
+   <VirtualHost *:80>
+       ServerName test.taksoride.com
+       DocumentRoot /var/www/html/test.taksoride.com/server/public
+       <Directory /var/www/html/test.taksoride.com/server/public>
+           Options -Indexes +FollowSymLinks
+           AllowOverride All
+           Require all granted
+       </Directory>
+   </VirtualHost>
+
+8. Enable site:
+   a2ensite test.taksoride.com.conf
+   systemctl reload apache2
+
+9. Install SSL:
+   certbot --apache -d test.taksoride.com
+
+═══════════════════════════════════════════════════════════════
+UPDATING THE APPLICATION
+═══════════════════════════════════════════════════════════════
+
+To update after initial deployment:
+
+1. Connect to server:
+   ssh root@45.93.139.14
+
+2. Pull latest changes:
+   cd /var/www/html/test.taksoride.com
+   git pull origin main
+
+3. Restart Apache:
+   systemctl restart apache2
+
+OR use the deployment script:
+   /root/deploy.sh
+
+═══════════════════════════════════════════════════════════════
+TROUBLESHOOTING
+═══════════════════════════════════════════════════════════════
+
+If something goes wrong:
+
+1. Check Apache logs:
+   tail -f /var/log/apache2/test.taksoride.com-error.log
+
+2. Check database connection:
+   mysql -u taksoride -p'Tabarka2016@@GG00' taksoride
+
+3. Check permissions:
+   ls -la /var/www/html/test.taksoride.com
+
+4. Restart services:
+   systemctl restart apache2
+   systemctl restart mysql
+
+═══════════════════════════════════════════════════════════════
+IMPORTANT REMINDERS
+═══════════════════════════════════════════════════════════════
+
+⚠️ DO NOT touch gt-academy.com or any other domains on this server
+⚠️ Change default admin password immediately
+⚠️ Configure all API keys before production use
+⚠️ Set up regular backups
+⚠️ Monitor logs regularly
+
+═══════════════════════════════════════════════════════════════
+SUPPORT
+═══════════════════════════════════════════════════════════════
+
+For detailed documentation, see:
+- DEPLOYMENT_GUIDE.md (complete guide)
+- SERVER_INFO.md (quick reference)
+
+GitHub Repository:
+https://github.com/Anonyme99910/taksoride
+
+═══════════════════════════════════════════════════════════════
+✅ READY TO DEPLOY!
+═══════════════════════════════════════════════════════════════
+
+Start with STEP 1 above and follow through to STEP 6.
+Good luck! 🚀
